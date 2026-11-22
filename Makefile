@@ -9,7 +9,7 @@ else
   PYTHON := $(VENV)/bin/python
 endif
 
-.PHONY: setup run test lint sast audit check report evidence-red demo-push demo-gitleaks
+.PHONY: setup run test lint sast audit check report evidence-red demo-push demo-gitleaks demo-hook
 
 setup:  ## create .venv and install runtime + dev dependencies
 	python3 -m venv $(VENV)
@@ -45,3 +45,6 @@ demo-push:  ## show the pre-push guard refusing direct and force pushes (throwaw
 
 demo-gitleaks:  ## show a commit with a fake key being refused
 	scripts/demo_gitleaks_refusal.sh
+
+demo-hook:  ## replay the poisoned note's actions through the agent's PreToolUse guard
+	scripts/demo_agent_hook.sh

@@ -30,5 +30,5 @@ check: lint test
 report:  ## write reports/summary.txt from the stored events
 	$(PYTHON) -m app.reports
 
-evidence-red:  ## run the seeded-bug regression tests with xfail disabled (red while a bug is open)
-	$(PYTHON) -m pytest -q --runxfail -m seeded_bug -p no:cacheprovider
+evidence-red:  ## seeded-bug tests with xfail disabled: red while a bug is open, green once fixed
+	PYTHON=$(PYTHON) scripts/evidence_red.sh docs/evidence/latest-red.txt

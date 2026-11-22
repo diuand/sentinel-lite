@@ -1,0 +1,199 @@
+# Seeded-bug regression tests, xfail disabled
+# commit: 64f91761f62f1bb079c596f638aaa0c07041a2be  ref: 64f9176
+# command: pytest --runxfail -m seeded_bug
+# date: 2026-11-22T14:40:29Z  python: Python 3.13.18
+# Seeded secrets are masked in this file so the fake key is not copied around.
+
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                   [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert ['/home/claud...pp/config.py'] == []
+      
+      Left contains one more item: 'app/config.py'
+      Use -v to get more diff
+tests/test_seeded_bugs.py:29: AssertionError: assert ['/home/claud...pp/config.py'] == []
+E   AssertionError: assert 'slk_live_****MASKED****' == 'from-the-environment'
+      
+      - from-the-environment
+      + slk_live_****MASKED****
+tests/test_seeded_bugs.py:35: AssertionError: assert 'slk_live_****MASKED****' == 'from-the-environment'
+E   AssertionError: assert [{'@timestamp...re': 35, ...}] == []
+      
+      Left contains 2 more items, first extra item: {'@timestamp': '2026-11-22T07:58:05Z', 'destination': {'ip': '192.0.2.20'}, 'message': 'Connection from 192.0.2.10 port 40022', 'risk_score': 10, ...}
+      Use -v to get more diff
+tests/test_seeded_bugs.py:46: AssertionError: assert [{'@timestamp...re': 35, ...}] == []
+E   assert 500 == 200
+     +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+tests/test_seeded_bugs.py:52: assert 500 == 200
+E   assert 200 in (400, 404)
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:68: assert 200 in (400, 404)
+E   assert 200 in (400, 404)
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:75: assert 200 in (400, 404)
+E   AssertionError: YAML loader executed a Python constructor
+    assert not True
+     +  where True = exists()
+     +    where exists = PosixPath('<tmp>/test_b04_yaml_python_tags_are_0/B04-MARKER-DIR').exists
+tests/test_seeded_bugs.py:89: AssertionError: YAML loader executed a Python constructor
+E   assert 200 == 400
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:98: assert 200 == 400
+E   assert 500 == 400
+     +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+tests/test_seeded_bugs.py:109: assert 500 == 400
+E   assert 500 == 400
+     +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+tests/test_seeded_bugs.py:109: assert 500 == 400
+E   assert 201 == 400
+     +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+tests/test_seeded_bugs.py:109: assert 201 == 400
+E   assert 201 == 400
+     +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+tests/test_seeded_bugs.py:109: assert 201 == 400
+E   assert 500 == 400
+     +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+tests/test_seeded_bugs.py:109: assert 500 == 400
+E   assert 201 == 413
+     +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+tests/test_seeded_bugs.py:117: assert 201 == 413
+E   assert 201 == 401
+     +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+tests/test_seeded_bugs.py:128: assert 201 == 401
+E   assert 200 == 401
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:128: assert 200 == 401
+E   assert 200 == 401
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:128: assert 200 == 401
+E   assert 200 == 401
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:128: assert 200 == 401
+E   assert 200 == 401
+     +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+tests/test_seeded_bugs.py:134: assert 200 == 401
+E   AssertionError: assert not True
+     +  where True = <built-in method get of dict object at 0x7fbf4d469880>('debug')
+     +    where <built-in method get of dict object at 0x7fbf4d469880> = {'host': '127.0.0.1', 'port': 5000, 'debug': True}.get
+tests/test_seeded_bugs.py:148: AssertionError: assert not True
+E   assert 'token-marker-123' not in "ingest requ...marker-123'}"
+      
+      'token-marker-123' is contained here:
+        : 'Bearer token-marker-123'}
+tests/test_seeded_bugs.py:163: assert 'token-marker-123' not in "ingest requ...marker-123'}"
+E   AssertionError: ['flask', 'pydantic', 'pyyaml', 'requests==2.31.0']
+    assert False
+     +  where False = all(<generator object test_b08_runtime_dependencies_pinned.<locals>.<genexpr> at 0x7fbf4d429460>)
+tests/test_seeded_bugs.py:178: AssertionError: ['flask', 'pydantic', 'pyyaml', 'requests==2.31.0']
+E   AssertionError: requests < 2.32.4 has known CVEs (CVE-2024-35195, CVE-2024-47081)
+    assert (2, 31, 0) >= (2, 32, 4)
+tests/test_seeded_bugs.py:185: AssertionError: requests < 2.32.4 has known CVEs (CVE-2024-35195, CVE-2024-47081)
+E   AssertionError: assert ['ci-baseline...up-python@v5'] == []
+      
+      Left contains 2 more items, first extra item: 'ci-baseline.yml: actions/checkout@v4'
+      Use -v to get more diff
+tests/test_seeded_bugs.py:204: AssertionError: assert ['ci-baseline...up-python@v5'] == []
+E   AssertionError: ci-baseline.yml
+    assert 'pull_request_target' not in ['pull_request_target']
+tests/test_seeded_bugs.py:212: AssertionError: ci-baseline.yml
+E   AssertionError: assert ['.claude/mem...shortcuts.md'] == []
+      
+      Left contains one more item: '.claude/memory/workflow-shortcuts.md'
+      Use -v to get more diff
+tests/test_seeded_bugs.py:230: AssertionError: assert ['.claude/mem...shortcuts.md'] == []
+E   FileNotFoundError: [Errno 2] No such file or directory: '.claude/settings.json'
+/usr/local/lib/python3.13/pathlib/_local.py:537: FileNotFoundError: [Errno 2] No such file or directory: '.claude/settings.json'
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+E   AssertionError: no PreToolUse guard hook configured
+    assert False
+     +  where False = exists()
+     +    where exists = PosixPath('.claude/hooks/guard.py').exists
+tests/test_seeded_bugs.py:244: AssertionError: no PreToolUse guard hook configured
+=========================== short test summary info ============================
+FAILED tests/test_seeded_bugs.py::test_b01_no_hardcoded_key_in_source - Asser...
+FAILED tests/test_seeded_bugs.py::test_b01_intel_key_comes_from_environment
+FAILED tests/test_seeded_bugs.py::test_b02_search_is_not_injectable - Asserti...
+FAILED tests/test_seeded_bugs.py::test_b02_quote_in_username_does_not_break_query
+FAILED tests/test_seeded_bugs.py::test_b03_relative_traversal_blocked - asser...
+FAILED tests/test_seeded_bugs.py::test_b03_fully_encoded_traversal_blocked - ...
+FAILED tests/test_seeded_bugs.py::test_b04_yaml_python_tags_are_not_executed
+FAILED tests/test_seeded_bugs.py::test_b04_rule_schema_is_validated - assert ...
+FAILED tests/test_seeded_bugs.py::test_b05_malformed_event_rejected_cleanly[missing_field]
+FAILED tests/test_seeded_bugs.py::test_b05_malformed_event_rejected_cleanly[wrong_types]
+FAILED tests/test_seeded_bugs.py::test_b05_malformed_event_rejected_cleanly[bad_ip]
+FAILED tests/test_seeded_bugs.py::test_b05_malformed_event_rejected_cleanly[bad_timestamp]
+FAILED tests/test_seeded_bugs.py::test_b05_malformed_event_rejected_cleanly[not_an_object]
+FAILED tests/test_seeded_bugs.py::test_b05_oversized_body_rejected - assert 2...
+FAILED tests/test_seeded_bugs.py::test_b06_endpoints_require_api_key[post-/ingest]
+FAILED tests/test_seeded_bugs.py::test_b06_endpoints_require_api_key[post-/admin/rules/reload]
+FAILED tests/test_seeded_bugs.py::test_b06_endpoints_require_api_key[get-/events/search?user=alice]
+FAILED tests/test_seeded_bugs.py::test_b06_endpoints_require_api_key[get-/reports/daily-summary.txt]
+FAILED tests/test_seeded_bugs.py::test_b06_wrong_api_key_rejected - assert 20...
+FAILED tests/test_seeded_bugs.py::test_b06_debug_off_and_bound_to_localhost
+FAILED tests/test_seeded_bugs.py::test_b07_logs_are_single_line_and_redacted
+FAILED tests/test_seeded_bugs.py::test_b08_runtime_dependencies_pinned - Asse...
+FAILED tests/test_seeded_bugs.py::test_b08_requests_not_a_known_vulnerable_version
+FAILED tests/test_seeded_bugs.py::test_b09_third_party_actions_pinned_to_sha
+FAILED tests/test_seeded_bugs.py::test_b09_least_privilege_and_no_pull_request_target
+FAILED tests/test_seeded_bugs.py::test_b10_agent_memory_contains_no_unsafe_instructions
+FAILED tests/test_seeded_bugs.py::test_b10_settings_define_deny_rules_and_hook
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input0]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input1]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input2]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input3]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input4]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Bash-tool_input5]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Read-tool_input6]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_blocks_dangerous_actions[Read-tool_input7]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_allows_normal_work[Bash-tool_input0]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_allows_normal_work[Bash-tool_input1]
+FAILED tests/test_seeded_bugs.py::test_b10_hook_allows_normal_work[Read-tool_input2]
+38 failed, 10 deselected in 0.29s

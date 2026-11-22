@@ -19,3 +19,6 @@ instance/
 .vscode/
 .idea/
 .DS_Store
+
+# Scratch output of `make evidence-red`
+docs/evidence/latest-red.txt

@@ -30,11 +30,13 @@ def defaults() -> dict:
     return {
         "DATABASE": os.environ.get("SENTINEL_DB", str(BASE_DIR / "instance" / "sentinel.db")),
         "INTEL_FEED": str(BASE_DIR / "data" / "intel_feed.json"),
+        "API_KEY": os.environ.get("SENTINEL_API_KEY", ""),
         "INTEL_API_KEY": os.environ.get("SENTINEL_INTEL_API_KEY", ""),
         "MISP_URL": os.environ.get("SENTINEL_MISP_URL", ""),
         "RULES_DIR": str(BASE_DIR / "rules"),
         "REPORTS_DIR": str(BASE_DIR / "reports"),
         "MAX_CONTENT_LENGTH": MAX_BODY_BYTES,
+        "DEBUG": False,  # never on: the Werkzeug debugger is a remote Python console (B-06)
         "HOST": "127.0.0.1",
         "PORT": int(os.environ.get("SENTINEL_PORT", "5000")),
     }

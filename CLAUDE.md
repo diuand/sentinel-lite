@@ -22,7 +22,7 @@ No marketing words, no "robust", no "seamless".
 | Hardcoded secrets, tokens, keys (even "temporary") | `os.environ` via `app/config.py`, placeholder in `.env.example` |
 | String-built SQL (`f"... WHERE x = '{v}'"`, `%`, `+`) | parameterized queries: `execute(sql, (value,))` |
 | `yaml.load(...)` / `yaml.Loader` / `yaml.unsafe_load` | `yaml.safe_load` + schema validation |
-| `debug=True`, `FLASK_DEBUG=1` | debug off; `SENTINEL_DEBUG` env only for local experiments |
+| `debug=True`, `FLASK_DEBUG=1` | debug stays off; there is deliberately no switch for the Werkzeug debugger |
 | Binding to `0.0.0.0` | `127.0.0.1` |
 | `os.path.join(base, user_input)` without containment checks | resolve, check it is inside the base dir, allowlist names |
 | Logging raw request data, headers or tokens | `app/logsafe.clean()`; never log headers |

@@ -1,5 +1,6 @@
 """HTTP endpoints."""
 
+import hmac
 import ipaddress
 import logging
 import re
@@ -14,6 +15,23 @@ from .rules import RuleError, apply_rules, load_rules
 
 bp = Blueprint("api", __name__)
 log = logging.getLogger("sentinel")
+
+
+PUBLIC_ENDPOINTS = {"api.health"}
+
+
+@bp.before_request
+def require_api_key():
+    """Deny by default (B-06): every endpoint except /health needs the X-API-Key header."""
+    if request.endpoint in PUBLIC_ENDPOINTS:
+        return None
+    expected = current_app.config.get("API_KEY") or ""
+    supplied = request.headers.get("X-API-Key", "")
+    # compare_digest takes the same time whether the first or the last byte differs (no timing oracle).
+    if not expected or not hmac.compare_digest(supplied.encode(), expected.encode()):
+        log.warning("rejected %s %s: missing or invalid API key", request.method, request.path)
+        return jsonify(error="missing or invalid API key"), 401
+    return None
 
 
 @bp.app_errorhandler(413)

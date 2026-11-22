@@ -5,8 +5,10 @@ from . import create_app
 
 def main() -> None:
     app = create_app()
-    # tracked exception: seeded bug B-06, open until its fix PR (see tests/test_tracked_exceptions.py)
-    app.run(host=app.config["HOST"], port=app.config["PORT"], debug=True)  # nosec B201
+    if not app.config["API_KEY"]:
+        raise SystemExit("SENTINEL_API_KEY is not set. Run `make setup` (writes a random key to .env) or export it.")
+    # Loopback only, debugger off (B-06). Put a TLS reverse proxy in front for anything beyond this laptop.
+    app.run(host=app.config["HOST"], port=app.config["PORT"], debug=False)
 
 
 if __name__ == "__main__":

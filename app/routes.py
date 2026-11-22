@@ -9,11 +9,22 @@ from flask import Blueprint, Response, abort, current_app, jsonify, request
 
 from . import db
 from .intel import enrich
-from .normalize import normalize
+from .normalize import InvalidEvent, normalize
 from .rules import RuleError, apply_rules, load_rules
 
 bp = Blueprint("api", __name__)
 log = logging.getLogger("sentinel")
+
+
+@bp.app_errorhandler(413)
+def too_large(_exc):
+    return jsonify(error="request body too large"), 413
+
+
+@bp.app_errorhandler(500)
+def server_error(_exc):
+    # Never send stack traces or internals to the client; details stay in the server log.
+    return jsonify(error="internal error"), 500
 
 
 @bp.get("/health")
@@ -23,10 +34,15 @@ def health():
 
 @bp.post("/ingest")
 def ingest():
-    raw = request.get_json(force=True)
+    raw = request.get_json(force=True, silent=True)  # bodies over MAX_CONTENT_LENGTH already got a 413
+    if raw is None:
+        return jsonify(error="body must be a JSON object"), 400
+    try:
+        doc = normalize(raw)
+    except InvalidEvent as exc:
+        return jsonify(error="invalid event", detail=exc.errors), 400
     log.info("ingest request headers=%s", dict(request.headers))
-    log.info("event user=%s message=%s", raw.get("user"), raw.get("message"))
-    doc = normalize(raw)
+    log.info("event user=%s message=%s", doc["user"]["name"], doc["message"])
     doc = enrich(doc, current_app.extensions["intel"])
     doc = apply_rules(doc, current_app.extensions["rules"])
     doc["event"] = {"id": db.insert_event(doc)}

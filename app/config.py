@@ -7,6 +7,8 @@ Secrets come from the environment, or from a local git-ignored `.env` file
 import os
 from pathlib import Path
 
+from .normalize import MAX_BODY_BYTES
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -32,6 +34,7 @@ def defaults() -> dict:
         "MISP_URL": os.environ.get("SENTINEL_MISP_URL", ""),
         "RULES_DIR": str(BASE_DIR / "rules"),
         "REPORTS_DIR": str(BASE_DIR / "reports"),
+        "MAX_CONTENT_LENGTH": MAX_BODY_BYTES,
         "HOST": "127.0.0.1",
         "PORT": int(os.environ.get("SENTINEL_PORT", "5000")),
     }

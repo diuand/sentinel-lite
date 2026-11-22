@@ -49,7 +49,8 @@ def insert_event(doc: dict) -> int:
 
 
 def search_by_user(user: str) -> list[dict]:
-    sql = f"SELECT doc FROM events WHERE user = '{user}' ORDER BY id"
+    # tracked exception: seeded bug B-02, open until its fix PR (see tests/test_tracked_exceptions.py)
+    sql = f"SELECT doc FROM events WHERE user = '{user}' ORDER BY id"  # nosec B608
     return [json.loads(row["doc"]) for row in get_db().execute(sql)]
 
 

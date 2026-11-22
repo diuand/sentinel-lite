@@ -65,7 +65,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - run: pip install -r requirements-dev.txt
-      - name: pip-audit (tracked exceptions come from .pip-audit-ignore)
+      - name: pip-audit (resolves and audits the full dependency tree; tracked exceptions come from .pip-audit-ignore)
         run: |
           ignores=$(sed -n 's/^\([A-Za-z0-9-]\{1,\}\).*/--ignore-vuln \1/p' .pip-audit-ignore 2>/dev/null || true)
           # shellcheck disable=SC2086

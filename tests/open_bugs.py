@@ -10,6 +10,5 @@ into normal, must-pass tests. `make evidence-red` runs them with xfail
 switched off to show the red state.
 """
 
-OPEN_BUGS = {
-    "B-08",
-}
+# All ten seeded bugs are fixed. (An empty `{}` would be a dict, hence set().)
+OPEN_BUGS: set[str] = set()

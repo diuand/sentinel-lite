@@ -1,6 +1,4 @@
 # Tracked exceptions for pip-audit. One vulnerability ID per line, then the seeded bug it belongs to.
 # Every line must name a bug that is still open in tests/open_bugs.py (enforced by
 # tests/test_tracked_exceptions.py), so an exception cannot outlive its bug.
-# This file must be empty (comments only) on a finished main.
-GHSA-9wx4-h78v-vm56  B-08  requests 2.31.0, CVE-2024-35195 (Session keeps verify=False for later requests)
-GHSA-9hjg-9r4m-mvj7  B-08  requests 2.31.0, CVE-2024-47081 (.netrc credentials leak to a crafted URL)
+# Empty since B-08 was fixed: requests 2.31.0 -> 2.34.2 resolves both entries that used to be here.

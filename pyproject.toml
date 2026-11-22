@@ -1,0 +1,17 @@
+[project]
+name = "sentinel-lite"
+version = "0.1.0"
+description = "Tiny log-enrichment service for the ULBS Module 4 risk lab"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["seeded_bug(id): regression test for a deliberately seeded bug"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

@@ -1,0 +1,5 @@
+# Known finding that cannot be removed without rewriting history (force pushes are forbidden here):
+# the deliberately planted, FAKE intel key of seeded bug B-01 in the baseline commit.
+# Listed by exact fingerprint (commit:file:rule:line), so the same key anywhere else is still caught.
+64f91761f62f1bb079c596f638aaa0c07041a2be:app/config.py:sentinel-api-key:9
+64f91761f62f1bb079c596f638aaa0c07041a2be:app/config.py:generic-api-key:9

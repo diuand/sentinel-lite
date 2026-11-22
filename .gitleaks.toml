@@ -1,0 +1,13 @@
+title = "Sentinel-Lite gitleaks configuration"
+
+# Keep every default gitleaks rule, and add one for this project's own key
+# format. Generic entropy rules can miss a key that contains a readable word
+# like FAKE, and that should not decide whether a key is caught.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "sentinel-api-key"
+description = "Sentinel-Lite / intel provider API key (slk_live_... or slk_test_...)"
+regex = '''slk_(?:live|test)_[A-Za-z0-9]{20,}'''
+keywords = ["slk_live_", "slk_test_"]

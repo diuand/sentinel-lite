@@ -1,0 +1,9 @@
+{
+  "_comment": "Synthetic events. IPs are RFC 5737 documentation addresses.",
+  "intel_match": {"ts": "2026-11-22T07:58:01Z", "src_ip": "203.0.113.66", "dst_ip": "192.0.2.20", "user": "alice", "message": "Connection from 203.0.113.66 port 51122"},
+  "clean": {"ts": "2026-11-22T07:58:05Z", "src_ip": "192.0.2.10", "dst_ip": "192.0.2.20", "user": "alice", "message": "Connection from 192.0.2.10 port 40022"},
+  "r001_positive": {"ts": "2026-11-22T07:59:00Z", "src_ip": "192.0.2.77", "dst_ip": "192.0.2.20", "user": "root", "message": "Failed password for root from 192.0.2.77 port 22 ssh2"},
+  "r001_negative": {"ts": "2026-11-22T07:59:10Z", "src_ip": "192.0.2.77", "dst_ip": "192.0.2.20", "user": "alice", "message": "Failed password for alice from 192.0.2.77 port 22 ssh2"},
+  "r002_positive": {"ts": "2026-11-22T08:01:00Z", "src_ip": "192.0.2.90", "dst_ip": "192.0.2.20", "user": "svc_backup", "message": "Accepted password for svc_backup from 192.0.2.90 port 22 ssh2"},
+  "r002_negative": {"ts": "2026-11-22T08:01:30Z", "src_ip": "192.0.2.90", "dst_ip": "192.0.2.20", "user": "svc_backup", "message": "Accepted publickey for svc_backup from 192.0.2.90 port 22 ssh2"}
+}

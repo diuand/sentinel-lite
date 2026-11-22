@@ -2,7 +2,8 @@
 
 import ipaddress
 import logging
-import os
+import re
+from pathlib import Path
 
 from flask import Blueprint, Response, abort, current_app, jsonify, request
 
@@ -38,13 +39,21 @@ def search():
     return jsonify(results=db.search_by_user(user))
 
 
-@bp.get("/reports/<path:name>")
+# Report names: lowercase letters, digits, dash, underscore, ending in .txt. No slashes, no dots before .txt.
+REPORT_NAME = re.compile(r"[a-z0-9][a-z0-9_-]{0,63}\.txt")
+
+
+@bp.get("/reports/<name>")
 def report(name):
-    path = os.path.join(current_app.config["REPORTS_DIR"], name)
-    if not os.path.isfile(path):
+    # Three independent checks (B-03): no slashes reach us (plain <name> converter),
+    # the name must match the allowlist, and the resolved file must sit directly in REPORTS_DIR.
+    if not REPORT_NAME.fullmatch(name):
         abort(404)
-    with open(path, encoding="utf-8") as fh:
-        return Response(fh.read(), mimetype="text/plain")
+    base = Path(current_app.config["REPORTS_DIR"]).resolve()
+    path = (base / name).resolve()
+    if path.parent != base or not path.is_file():
+        abort(404)
+    return Response(path.read_text(encoding="utf-8"), mimetype="text/plain")
 
 
 @bp.get("/intel/check")

@@ -15,6 +15,7 @@ setup:  ## create .venv and install runtime + dev dependencies
 	python3 -m venv $(VENV)
 	$(VENV)/bin/pip install -q --upgrade pip
 	$(VENV)/bin/pip install -q -r requirements.txt -r requirements-dev.txt
+	@[ -f .env ] || { cp .env.example .env && echo "created .env from .env.example (git-ignored)"; }
 
 run:  ## start the service on 127.0.0.1:5000
 	$(PYTHON) -m app

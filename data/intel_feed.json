@@ -1,0 +1,10 @@
+{
+  "name": "sentinel-local-feed",
+  "description": "Synthetic intel feed. Every address is from the RFC 5737 documentation ranges, so nothing here points at a real host.",
+  "updated": "2026-11-22",
+  "indicators": [
+    {"type": "ip-src", "value": "203.0.113.66", "threat": "SSH brute-force scanner", "confidence": 85, "first_seen": "2026-10-02"},
+    {"type": "ip-src", "value": "198.51.100.23", "threat": "Known C2 relay", "confidence": 90, "first_seen": "2026-09-14"},
+    {"type": "ip-src", "value": "203.0.113.200", "threat": "Credential-stuffing botnet node", "confidence": 70, "first_seen": "2026-11-01"}
+  ]
+}

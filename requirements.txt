@@ -1,0 +1,4 @@
+flask
+pydantic
+pyyaml
+requests==2.31.0

@@ -1,0 +1,21 @@
+# Local refusal of direct and force pushes to main (pre-push guard)
+# command: make demo-push   (scripts/demo_push_refusal.sh; throwaway bare remote in /tmp)
+# date: 2026-11-22T14:03:07Z
+
+== 1. direct push to main ==
+$ git push origin main
+BLOCKED: direct push to main is not allowed. Push a branch and open a pull request.
+error: failed to push some refs to '/tmp/<tmp>/remote.git'
+-> refused (exit 1)
+
+== 2. force push to a branch ==
+$ git push --force origin feature/x
+BLOCKED: non-fast-forward (force) push to refs/heads/feature/x is not allowed.
+error: failed to push some refs to '/tmp/<tmp>/remote.git'
+-> refused (exit 1)
+
+== 3. normal branch push (allowed) ==
+$ git push origin feature/y
+-> accepted
+
+remote main is still at: 1113633 root

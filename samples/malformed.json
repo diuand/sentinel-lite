@@ -1,0 +1,8 @@
+{
+  "_comment": "Malformed ingest bodies. Each must be rejected with 400, never crash the service.",
+  "missing_field": {"ts": "2026-11-22T08:00:00Z", "src_ip": "192.0.2.10", "user": "alice", "message": "no dst_ip"},
+  "wrong_types": {"ts": "2026-11-22T08:00:00Z", "src_ip": "192.0.2.10", "dst_ip": "192.0.2.20", "user": 12345, "message": ["not", "a", "string"]},
+  "bad_ip": {"ts": "2026-11-22T08:00:00Z", "src_ip": "not-an-ip", "dst_ip": "192.0.2.20", "user": "alice", "message": "hello"},
+  "bad_timestamp": {"ts": "yesterday-ish", "src_ip": "192.0.2.10", "dst_ip": "192.0.2.20", "user": "alice", "message": "hello"},
+  "not_an_object": ["ts", "src_ip", "dst_ip", "user", "message"]
+}

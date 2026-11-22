@@ -1,0 +1,8 @@
+Sentinel-Lite summary
+Generated: 2026-11-22 08:00 UTC
+Events stored: 6
+Events matching intel feed: 2
+Top sources by risk score:
+  203.0.113.66       95
+  198.51.100.23      70
+  192.0.2.10         40

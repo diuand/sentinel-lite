@@ -1,0 +1,19 @@
+# Changes to these paths need review from the owner. On GitHub Free (private repo)
+# this cannot be enforced as a required review; it still auto-requests the owner
+# and makes the ownership explicit. See docs/PROJECT.md, "GitHub route".
+*                 @diuand
+
+# Pipelines and repository policy
+/.github/         @diuand
+/.pre-commit-config.yaml @diuand
+/.gitleaks.toml   @diuand
+/.pip-audit-ignore @diuand
+
+# AI-agent configuration, memory and skills (B-10: memory poisoning)
+/CLAUDE.md        @diuand
+/.claude/         @diuand
+/memory/          @diuand
+/skills/          @diuand
+
+# Detection logic
+/rules/           @diuand

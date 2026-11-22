@@ -1,0 +1,38 @@
+name: governance
+
+# GitHub Free does not offer branch protection or rulesets on private repos
+# (GITHUB_ROUTE 4). This workflow is the evidence-based replacement: after
+# every push to main it checks that each commit on main's first-parent line
+# arrived through a merged pull request. The root commit is the only
+# documented exception. It is a detective control: it cannot stop a push,
+# it makes one visible (red run + notification) within a minute.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: governance
+  cancel-in-progress: false
+
+jobs:
+  main-history:
+    name: every commit on main came from a merged PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: check main history against merged PRs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: python3 scripts/check_main_history.py

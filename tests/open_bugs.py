@@ -11,7 +11,6 @@ switched off to show the red state.
 """
 
 OPEN_BUGS = {
-    "B-04",
     "B-05",
     "B-06",
     "B-07",

@@ -1,16 +1,56 @@
 """Detection rules: loaded from rules/*.yaml, applied to each normalized event."""
 
 from pathlib import Path
+from typing import Literal
 
 import yaml
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
+
+FIELDS = Literal["message", "user.name", "source.ip", "destination.ip"]
+
+
+class RuleError(ValueError):
+    """A rule file is not valid YAML or does not match the schema."""
+
+
+class Condition(BaseModel):
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
+    field: FIELDS
+    equals: str | None = None
+    contains: str | None = Field(default=None, min_length=1, max_length=200)
+    in_: list[str] | None = Field(default=None, alias="in", min_length=1, max_length=50)
+
+    @model_validator(mode="after")
+    def exactly_one_operator(self):
+        if sum(op is not None for op in (self.equals, self.contains, self.in_)) != 1:
+            raise ValueError("each condition needs exactly one of: equals, contains, in")
+        return self
+
+
+class Rule(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    id: str = Field(pattern=r"^R-\d{3}$")
+    name: str = Field(min_length=3, max_length=120)
+    description: str = Field(default="", max_length=1000)
+    severity: Literal["low", "medium", "high", "critical"]
+    risk: int = Field(ge=0, le=100)
+    conditions: list[Condition] = Field(min_length=1, max_length=10)
 
 
 def load_rules(rules_dir: str) -> list[dict]:
-    rules = []
+    """Load and validate every rule file. All-or-nothing: any bad file raises RuleError (B-04)."""
+    rules, seen = [], set()
     for path in sorted(Path(rules_dir).glob("*.yaml")):
-        with open(path, encoding="utf-8") as fh:
-            # tracked exception: seeded bug B-04, open until its fix PR (see tests/test_tracked_exceptions.py)
-            rules.append(yaml.load(fh, Loader=yaml.Loader))  # nosec B506
+        try:
+            with open(path, encoding="utf-8") as fh:
+                data = yaml.safe_load(fh)  # plain data only: no Python object construction
+            rule = Rule.model_validate(data)
+        except (yaml.YAMLError, ValidationError) as exc:
+            raise RuleError(f"{path.name}: {exc}") from exc
+        if rule.id in seen:
+            raise RuleError(f"{path.name}: duplicate rule id {rule.id}")
+        seen.add(rule.id)
+        rules.append(rule.model_dump(by_alias=True, exclude_none=True))
     return rules
 
 

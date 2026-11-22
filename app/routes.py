@@ -10,7 +10,7 @@ from flask import Blueprint, Response, abort, current_app, jsonify, request
 from . import db
 from .intel import enrich
 from .normalize import normalize
-from .rules import apply_rules, load_rules
+from .rules import RuleError, apply_rules, load_rules
 
 bp = Blueprint("api", __name__)
 log = logging.getLogger("sentinel")
@@ -69,7 +69,11 @@ def intel_check():
 
 @bp.post("/admin/rules/reload")
 def reload_rules():
-    rules = load_rules(current_app.config["RULES_DIR"])
+    try:
+        rules = load_rules(current_app.config["RULES_DIR"])
+    except RuleError as exc:
+        log.warning("rule reload rejected, previous rules kept: %s", exc)
+        return jsonify(error="invalid rule file; previous rules kept", detail=str(exc)[:300]), 400
     current_app.extensions["rules"] = rules
     log.info("rules reloaded: %d", len(rules))
     return jsonify(loaded=len(rules), ids=[r["id"] for r in rules])

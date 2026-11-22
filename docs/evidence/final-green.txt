@@ -1,0 +1,11 @@
+# Seeded-bug regression tests on the fixed code, xfail disabled: all must pass
+# commit: 8c31d81f8cff8b9e27fe949720d1689d63b0e6e1  ref: 8c31d81
+# command: pytest --runxfail -m seeded_bug
+# date: 2026-11-22T14:20:37Z  python: Python 3.13.18
+# Seeded secrets are masked in this file so the fake key is not copied around.
+
+......................................                                   [100%]
+38 passed, 48 deselected in 0.43s
+
+# full suite: python -m pytest -q
+86 passed in 0.97s

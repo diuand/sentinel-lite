@@ -1,0 +1,19 @@
+# Enrichment changes the outcome (scripts/demo_enrichment.py, in-process, temp DB)
+# date: 2026-11-22T14:18:32Z
+
+--- intel_match: src_ip=203.0.113.66 user=alice
+    tags       = ['threat.indicator.matched']
+    risk_score = 70
+    threat     = {"confidence": 85, "feed": {"name": "sentinel-local-feed"}, "indicator": {"description": "SSH brute-force scanner", "ip": "203.0.113.66", "type": "ipv4-addr"}}
+--- clean: src_ip=192.0.2.10 user=alice
+    tags       = []
+    risk_score = 10
+--- r001_positive: src_ip=192.0.2.77 user=root
+    tags       = ['rule:R-001']
+    risk_score = 35
+--- r002_positive: src_ip=192.0.2.90 user=svc_backup
+    tags       = ['rule:R-002']
+    risk_score = 40
+--- GET /intel/check
+    203.0.113.66   matched=True
+    192.0.2.10     matched=False

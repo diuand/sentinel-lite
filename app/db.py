@@ -49,9 +49,9 @@ def insert_event(doc: dict) -> int:
 
 
 def search_by_user(user: str) -> list[dict]:
-    # tracked exception: seeded bug B-02, open until its fix PR (see tests/test_tracked_exceptions.py)
-    sql = f"SELECT doc FROM events WHERE user = '{user}' ORDER BY id"  # nosec B608
-    return [json.loads(row["doc"]) for row in get_db().execute(sql)]
+    # Parameterized: the driver sends `user` as data, never as SQL text (B-02).
+    rows = get_db().execute("SELECT doc FROM events WHERE user = ? ORDER BY id", (user,))
+    return [json.loads(row["doc"]) for row in rows]
 
 
 def summary_counts() -> dict:

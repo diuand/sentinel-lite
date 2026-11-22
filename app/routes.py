@@ -10,6 +10,7 @@ from flask import Blueprint, Response, abort, current_app, jsonify, request
 
 from . import db
 from .intel import enrich
+from .logsafe import clean
 from .normalize import InvalidEvent, normalize
 from .rules import RuleError, apply_rules, load_rules
 
@@ -29,7 +30,7 @@ def require_api_key():
     supplied = request.headers.get("X-API-Key", "")
     # compare_digest takes the same time whether the first or the last byte differs (no timing oracle).
     if not expected or not hmac.compare_digest(supplied.encode(), expected.encode()):
-        log.warning("rejected %s %s: missing or invalid API key", request.method, request.path)
+        log.warning("rejected %s %s: missing or invalid API key", request.method, clean(request.path))
         return jsonify(error="missing or invalid API key"), 401
     return None
 
@@ -59,11 +60,12 @@ def ingest():
         doc = normalize(raw)
     except InvalidEvent as exc:
         return jsonify(error="invalid event", detail=exc.errors), 400
-    log.info("ingest request headers=%s", dict(request.headers))
-    log.info("event user=%s message=%s", doc["user"]["name"], doc["message"])
     doc = enrich(doc, current_app.extensions["intel"])
     doc = apply_rules(doc, current_app.extensions["rules"])
     doc["event"] = {"id": db.insert_event(doc)}
+    # Never log request headers (API key, cookies). Untrusted fields go through clean() (B-07).
+    log.info("ingested event id=%s user=%s src=%s risk=%s tags=%s message=%s", doc["event"]["id"],
+             clean(doc["user"]["name"]), doc["source"]["ip"], doc["risk_score"], doc["tags"], clean(doc["message"]))
     return jsonify(doc), 201
 
 
@@ -106,7 +108,7 @@ def reload_rules():
     try:
         rules = load_rules(current_app.config["RULES_DIR"])
     except RuleError as exc:
-        log.warning("rule reload rejected, previous rules kept: %s", exc)
+        log.warning("rule reload rejected, previous rules kept: %s", clean(exc))
         return jsonify(error="invalid rule file; previous rules kept", detail=str(exc)[:300]), 400
     current_app.extensions["rules"] = rules
     log.info("rules reloaded: %d", len(rules))
